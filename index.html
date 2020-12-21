@@ -27,6 +27,9 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // Atualiza estado
+        x += 10*dt;  
+
         // Desenha os elementos
         ctx.fillStyle = "white";
         ctx.fillRect(x, y, 20, 20);
