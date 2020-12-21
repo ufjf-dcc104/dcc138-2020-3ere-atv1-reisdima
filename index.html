@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DCC138 Exemplo01</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>DCC138 Exemplo 01</h1>
     <canvas></canvas>
     <script>
-        const canvas = document.querySelector("canvas");
-        let ctx = canvas.getContext("2d");
-        canvas.width = 480;
-        canvas.height = 320;
-        let x = 100;
-        let y = 150;
-        desenha();
-        
-        function desenha(){
-            // Desenha o fundo
-            ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Desenha os elementos
-            ctx.fillStyle = "white";
-            ctx.fillRect(x, y, 20, 20);
-        }
+      const canvas = document.querySelector("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.width = 480;
+      canvas.height = 320;
+      let x = 100;
+      let y = 150;
+      let t0;
+      let dt;
+
+      requestAnimationFrame(desenha);
+
+      function desenha(t) {
+        t0 = t0 ?? t;
+        dt = (t - t0) / 1000;
+        // Desenha o fundo
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Desenha os elementos
+        ctx.fillStyle = "white";
+        ctx.fillRect(x, y, 20, 20);
+        requestAnimationFrame(desenha);
+        t0  = t;
+      }
     </script>
-</body>
+  </body>
 </html>
