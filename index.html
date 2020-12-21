@@ -13,9 +13,19 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
-
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        let x = 100;
+        let y = 150;
+        desenha();
+        
+        function desenha(){
+            // Desenha o fundo
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Desenha os elementos
+            ctx.fillStyle = "white";
+            ctx.fillRect(x, y, 20, 20);
+        }
     </script>
 </body>
 </html>
