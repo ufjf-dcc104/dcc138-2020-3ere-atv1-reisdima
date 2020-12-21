@@ -10,33 +10,55 @@
     <canvas></canvas>
     <script>
       const canvas = document.querySelector("canvas");
-      let ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       canvas.width = 480;
       canvas.height = 320;
-      let x = 100;
-      let y = 150;
+      let rectX = 100;
+      let rectY = 150;
+      let sentidoX = 1;
+      let sentidoY = 1;
+      let rectWidth = 20;
+      let rectHeight = 20;
+      let speed = 300;
+
       let t0;
       let dt;
 
-      requestAnimationFrame(desenha);
+      requestAnimationFrame(update);
 
-      function desenha(t) {
+      function update(t) {
         t0 = t0 ?? t;
         dt = (t - t0) / 1000;
         // Desenha o fundo
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Atualiza estado
-        // x += 10*dt;  
-        x = 100 + 1500*Math.sin(t/200)*dt;
-        y = 100 + 1500*Math.cos(t/200)*dt;
+        desenhaRetangulo();
 
-        // Desenha os elementos
+        requestAnimationFrame(update);
+        t0 = t;
+      }
+
+      function desenhaRetangulo() {
+
+        // Detectando colisão com borda
+        if (rectX + rectWidth >= canvas.width) {
+          sentidoX = -1;
+        } else if (rectX <= 0) {
+          sentidoX = 1;
+        }
+        if (rectY + rectHeight >= canvas.height) {
+          sentidoY = -1
+        } else if (rectY <= 0) {
+          sentidoY = 1;
+        }
+
+        rectY += speed * dt * sentidoY;
+        rectX += speed * dt * sentidoX;
+        let oldStyle = ctx.fillStyle;
         ctx.fillStyle = "white";
-        ctx.fillRect(x, y, 20, 20);
-        requestAnimationFrame(desenha);
-        t0  = t;
+        ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+        ctx.fillStyle = oldStyle;
       }
     </script>
   </body>
