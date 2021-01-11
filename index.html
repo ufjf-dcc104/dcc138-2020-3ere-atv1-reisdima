@@ -20,12 +20,19 @@
             let sentidoX = 1;
             let sentidoY = 1;
 
+            const force = 180;
+
+            // "Vetor"  de aceleração
+            let ax = 0;
+            let ay = 0;
+
+            // "Vetor" de velocidade
             let vx = 0;
             let vy = 0;
 
             let rectWidth = 20;
             let rectHeight = 20;
-            let speed = 100;
+            let speed = 180;
 
             let t0;
             let dt;
@@ -59,8 +66,11 @@
                 // }
 
                 // Atualiza dinâmica do estado do retângulo
-                rectX += dt * vx * speed;
-                rectY += dt * vy * speed;
+                vx = vx + ax * dt;
+                vy = vy + ay * dt;
+                rectX += dt * vx;
+                rectY += dt * vy;
+                
                 let oldStyle = ctx.fillStyle;
                 ctx.fillStyle = "white";
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
@@ -71,35 +81,39 @@
             addEventListener("keyup", teclaSolta);
 
             function teclaPressionada(event) {
+                console.log(vy);
                 console.log(event.key);
                 switch (event.key) {
                     case "ArrowUp":
-                        vy = -1;
+                        ay = -force;
                         break;
                     case "ArrowDown":
-                        vy = 1;
+                        ay = force;
                         break;
                     case "ArrowLeft":
-                        vx = -1;
+                        ax = -force;
                         break;
                     case "ArrowRight":
-                        vx = 1;
+                        ax = force;
                         break;
                 }
             }
             function teclaSolta(event) {
-                console.log(event.key);
                 switch (event.key) {
                     case "ArrowUp":
+                        ay = 0;
                         vy = 0;
                         break;
                     case "ArrowDown":
+                        ay = 0;
                         vy = 0;
                         break;
                     case "ArrowLeft":
+                        ax = 0;
                         vx = 0;
                         break;
                     case "ArrowRight":
+                        ax = 0;
                         vx = 0;
                         break;
                 }
