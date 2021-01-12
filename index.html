@@ -14,25 +14,34 @@
             canvas.width = 480;
             canvas.height = 320;
 
-            let rectX = 100;
-            let rectY = 150;
-
             let sentidoX = 1;
             let sentidoY = 1;
 
             const force = 180;
 
-            // "Vetor"  de aceleração
-            let ax = 0;
-            let ay = 0;
-
-            // "Vetor" de velocidade
-            let vx = 0;
-            let vy = 0;
-
-            let rectWidth = 20;
-            let rectHeight = 20;
-            let speed = 180;
+            let playerRect = {
+                x: 100,
+                y: 150,
+                ax: 0,
+                ay: 0,
+                vx: 0,
+                vy: 0,
+                height: 20,
+                width: 20,
+                speed: 180,
+            };
+            
+            let computerRect = {
+                x: 200,
+                y: 300,
+                ax: 0,
+                ay: 0,
+                vx: 0,
+                vy: 0,
+                height: 20,
+                width: 20,
+                speed: 180,
+            };
 
             let t0;
             let dt;
@@ -47,6 +56,7 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 desenhaRetangulo();
+                desenhaRetanguloVermelho();
 
                 requestAnimationFrame(update);
                 t0 = t;
@@ -66,14 +76,28 @@
                 // }
 
                 // Atualiza dinâmica do estado do retângulo
-                vx = vx + ax * dt;
-                vy = vy + ay * dt;
-                rectX += dt * vx;
-                rectY += dt * vy;
+                playerRect.vx = playerRect.vx + playerRect.ax * dt;
+                playerRect.vy = playerRect.vy + playerRect.ay * dt;
+                playerRect.x += dt * playerRect.vx;
+                playerRect.y += dt * playerRect.vy;
                 
                 let oldStyle = ctx.fillStyle;
                 ctx.fillStyle = "white";
-                ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+                ctx.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
+                ctx.fillStyle = oldStyle;
+            }
+            function desenhaRetanguloVermelho() {
+                // Atualiza dinâmica do estado do retângulo
+                computerRect.ax = 0.5 * (playerRect.x - computerRect.x) - 0.2 * computerRect.vx;
+                computerRect.ay = 0.5 * (playerRect.y - computerRect.y) - 0.2 * computerRect.vy;
+                computerRect.vx = computerRect.vx + computerRect.ax * dt;
+                computerRect.vy = computerRect.vy + computerRect.ay * dt;
+                computerRect.x += dt * computerRect.vx;
+                computerRect.y += dt * computerRect.vy;
+
+                let oldStyle = ctx.fillStyle;
+                ctx.fillStyle = "red";
+                ctx.fillRect(computerRect.x, computerRect.y, computerRect.width, computerRect.height);
                 ctx.fillStyle = oldStyle;
             }
 
@@ -81,40 +105,38 @@
             addEventListener("keyup", teclaSolta);
 
             function teclaPressionada(event) {
-                console.log(vy);
-                console.log(event.key);
                 switch (event.key) {
                     case "ArrowUp":
-                        ay = -force;
+                        playerRect.ay = -force;
                         break;
                     case "ArrowDown":
-                        ay = force;
+                        playerRect.ay = force;
                         break;
                     case "ArrowLeft":
-                        ax = -force;
+                        playerRect.ax = -force;
                         break;
                     case "ArrowRight":
-                        ax = force;
+                        playerRect.ax = force;
                         break;
                 }
             }
             function teclaSolta(event) {
                 switch (event.key) {
                     case "ArrowUp":
-                        ay = 0;
-                        vy = 0;
+                        playerRect.ay = 0;
+                        playerRect.vy = 0;
                         break;
                     case "ArrowDown":
-                        ay = 0;
-                        vy = 0;
+                        playerRect.ay = 0;
+                        playerRect.vy = 0;
                         break;
                     case "ArrowLeft":
-                        ax = 0;
-                        vx = 0;
+                        playerRect.ax = 0;
+                        playerRect.vx = 0;
                         break;
                     case "ArrowRight":
-                        ax = 0;
-                        vx = 0;
+                        playerRect.ax = 0;
+                        playerRect.vx = 0;
                         break;
                 }
             }
