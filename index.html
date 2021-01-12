@@ -31,7 +31,7 @@
                 speed: 180,
                 desenhar: desenharElemento,
                 mover: moverElemento,
-                color: "white",
+                color: "white"
             };
 
             let computerRect = {
@@ -47,6 +47,7 @@
                 desenhar: desenharElemento,
                 mover: moverElemento,
                 color: "red",
+                controlar: perseguirAlvo,
             };
 
             let t0;
@@ -75,12 +76,8 @@
                 playerRect.desenhar();
             }
             function desenhaRetanguloVermelho() {
-                computerRect.ax =
-                    0.5 * (playerRect.x - computerRect.x) -
-                    0.2 * computerRect.vx;
-                computerRect.ay =
-                    0.5 * (playerRect.y - computerRect.y) -
-                    0.2 * computerRect.vy;
+                // computerRect.controlar({x: 200, y: 50});
+                computerRect.controlar(playerRect);
                 computerRect.mover();
                 computerRect.desenhar();
             }
@@ -93,6 +90,15 @@
                 this.vy = this.vy + this.ay * dt;
                 this.x += dt * this.vx;
                 this.y += dt * this.vy;
+            }
+
+            function perseguirAlvo(alvo) {
+                this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
+                this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
+            }
+            function evitarAlvo(alvo) {
+                this.ax = -0.5 * (alvo.x - this.x) - 0.2 * this.vx;
+                this.ay = -0.5 * (alvo.y - this.y) - 0.2 * this.vy;
             }
 
             function desenharElemento() {
