@@ -29,6 +29,10 @@
                 height: 20,
                 width: 20,
                 speed: 180,
+                desenhar: function() {
+                    ctx.fillStyle = "white";
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
             };
             
             let computerRect = {
@@ -41,6 +45,10 @@
                 height: 20,
                 width: 20,
                 speed: 180,
+                desenhar: function() {
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
             };
 
             let t0;
@@ -82,8 +90,7 @@
                 playerRect.y += dt * playerRect.vy;
                 
                 let oldStyle = ctx.fillStyle;
-                ctx.fillStyle = "white";
-                ctx.fillRect(playerRect.x, playerRect.y, playerRect.width, playerRect.height);
+                playerRect.desenhar();
                 ctx.fillStyle = oldStyle;
             }
             function desenhaRetanguloVermelho() {
@@ -124,19 +131,15 @@
                 switch (event.key) {
                     case "ArrowUp":
                         playerRect.ay = 0;
-                        playerRect.vy = 0;
                         break;
                     case "ArrowDown":
                         playerRect.ay = 0;
-                        playerRect.vy = 0;
                         break;
                     case "ArrowLeft":
                         playerRect.ax = 0;
-                        playerRect.vx = 0;
                         break;
                     case "ArrowRight":
                         playerRect.ax = 0;
-                        playerRect.vx = 0;
                         break;
                 }
             }
