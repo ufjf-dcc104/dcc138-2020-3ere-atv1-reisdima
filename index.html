@@ -37,8 +37,8 @@
             const sprites = [];
             for (let i = 0; i < 50; i++) {
                 let enemy = {
-                    x: canvas.width * Math.random(),
-                    y: canvas.height * Math.random(),
+                    x: canvas.width * (1 + 10 * Math.random()),
+                    y: canvas.height *  Math.random(),
                     ax: 0,
                     ay: 0,
                     vx: 0,
@@ -122,8 +122,8 @@
             }
 
             function perseguirAlvo(alvo) {
-                this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
-                this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
+                this.ax = 100 * Math.sign(alvo.x - this.x) - 0.2 * this.vx;
+                this.ay = 100 * Math.sign(alvo.y - this.y) - 0.2 * this.vy;
             }
             function evitarAlvo(alvo) {
                 this.ax = -0.5 * (alvo.x - this.x) - 0.2 * this.vx;
@@ -150,7 +150,7 @@
                         playerRect.ax = force;
                         break;
                     case " ":
-                        if(o.x === -1000){
+                        if (o.x === -1000) {
                             o.x = playerRect.x;
                             o.y = playerRect.y;
                             o.vx = 200;
